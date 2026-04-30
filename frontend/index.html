@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Hub</title>
+  <style>
+    body { font-family: Arial, sans-serif; background: #0f0f0f; color: #fff; }
+    .container { max-width: 800px; margin: auto; padding: 20px; }
+    textarea { width: 100%; height: 120px; margin-bottom: 10px; }
+    button { padding: 10px 20px; margin: 5px; cursor: pointer; }
+    .response { background: #1e1e1e; padding: 15px; margin-top: 10px; border-radius: 5px; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>AI Hub: Grok | ChatGPT | Gemini</h1>
+    <textarea id="userInput" placeholder="Type your question..."></textarea>
+    <div>
+      <button onclick="askAI('chatgpt')">Ask ChatGPT</button>
+      <button onclick="askAI('gemini')">Ask Gemini</button>
+      <button onclick="askAI('grok')">Ask Grok</button>
+    </div>
+    <div id="output" class="response"></div>
+  </div>
+
+  <script>
+    async function askAI(model) {
+      const input = document.getElementById("userInput").value;
+      const responseBox = document.getElementById("output");
+      responseBox.innerHTML = "Loading " + model + "...";
+
+      try {
+        const res = await fetch(`/api/${model}`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ prompt: input })
+        });
+        const data = await res.json();
+        responseBox.innerHTML = `<strong>${model}:</strong> ${data.reply}`;
+      } catch (err) {
+        responseBox.innerHTML = "Error: " + err.message;
+      }
+    }
+  </script>
+</body>
+</html>
