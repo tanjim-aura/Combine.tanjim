@@ -1,0 +1,11 @@
+{
+  "name": "ai-hub",
+  "version": "1.0.0",
+  "scripts": {
+    "dev": "vercel dev",
+    "start": "vercel start"
+  },
+  "dependencies": {
+    "node-fetch": "^2.6.7"
+  }
+}
